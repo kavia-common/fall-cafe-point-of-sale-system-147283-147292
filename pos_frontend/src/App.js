@@ -5,6 +5,7 @@ import StatusBar from './components/StatusBar';
 import MenuGrid from './features/orders/MenuGrid';
 import CurrentOrder from './features/orders/CurrentOrder';
 import CheckoutPanel from './features/checkout/CheckoutPanel';
+import MenuManager from './features/menu/MenuManager';
 import { CartProvider } from './state/cartContext';
 
 /**
@@ -18,15 +19,7 @@ import { CartProvider } from './state/cartContext';
  * Avoids any Supabase usage to keep preview working without env vars.
  */
 
-// Simple placeholder components for routes (kept for other routes)
-function Menu() {
-  return (
-    <div className="card">
-      <div className="h2">Menu</div>
-      <p className="muted">Browse and maintain menu items.</p>
-    </div>
-  );
-}
+
 function Checkout() {
   return (
     <div>
@@ -144,7 +137,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/orders" replace />} />
             <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/menu" element={<Menu />} />
+            <Route path="/menu" element={<MenuManager />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/settings" element={<Settings />} />
