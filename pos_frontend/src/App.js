@@ -3,6 +3,7 @@ import { Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import StatusBar from './components/StatusBar';
 import MenuGrid from './features/orders/MenuGrid';
+import CurrentOrder from './features/orders/CurrentOrder';
 import { CartProvider } from './state/cartContext';
 
 /**
@@ -97,10 +98,7 @@ function OrdersPage() {
 
         <aside>
           <div className="h3" style={{ marginBottom: 'var(--space-3)' }}>Current Order</div>
-          <div className="card">
-            <p className="muted">CurrentOrder UI coming soon.</p>
-            <p className="muted">Use the Add buttons to add items to the cart.</p>
-          </div>
+          <CurrentOrder />
         </aside>
       </div>
     </div>
