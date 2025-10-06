@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
+import StatusBar from './components/StatusBar';
 
 /**
  * Ocean Professional App Shell
@@ -77,14 +78,7 @@ function SidebarPlaceholder() {
 }
 
 function StatusBarPlaceholder() {
-  return (
-    <div className="statusbar">
-      <span className="muted">Status: Ready</span>
-      <span className="muted" style={{ marginLeft: 'auto' }}>
-        Ocean Professional Theme
-      </span>
-    </div>
-  );
+  return null;
 }
 
 // PUBLIC_INTERFACE
@@ -135,7 +129,7 @@ function App() {
       </main>
 
       {/* Bottom status bar */}
-      <StatusBarPlaceholder />
+      <StatusBar statusMessage="Ready" statusType="info" />
     </div>
   );
 }
