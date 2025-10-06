@@ -6,6 +6,7 @@ import MenuGrid from './features/orders/MenuGrid';
 import CurrentOrder from './features/orders/CurrentOrder';
 import CheckoutPanel from './features/checkout/CheckoutPanel';
 import MenuManager from './features/menu/MenuManager';
+import SalesDashboard from './features/sales/SalesDashboard';
 import { CartProvider } from './state/cartContext';
 
 /**
@@ -28,12 +29,7 @@ function Checkout() {
   );
 }
 function Sales() {
-  return (
-    <div className="card">
-      <div className="h2">Sales</div>
-      <p className="muted">Review reports and daily totals.</p>
-    </div>
-  );
+  return <SalesDashboard />;
 }
 function Settings() {
   return (
