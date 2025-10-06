@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Fall Cafe POS Logo</title>
+  <desc id="desc">Minimal coffee cup with steam in Ocean Professional colors</desc>
+  <defs>
+    <linearGradient id="steamGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#60A5FA" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="cupGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F3F4F6"/>
+    </linearGradient>
+    <linearGradient id="saucerGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E5E7EB"/>
+      <stop offset="100%" stop-color="#D1D5DB"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="128" height="128" rx="16" fill="#ffffff"/>
+  <g transform="translate(16,18)">
+    <!-- Steam -->
+    <path d="M24,18 C24,10 36,10 36,3" stroke="url(#steamGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M34,22 C34,14 46,14 46,7" stroke="url(#steamGrad)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>
+    <path d="M44,18 C44,12 54,12 54,6" stroke="url(#steamGrad)" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- Cup -->
+    <g>
+      <path d="M16,34 h44 a0,0 0 0 1 0,0 v16 a18,18 0 0 1 -18,18 h-8 a18,18 0 0 1 -18,-18 v-16 a0,0 0 0 1 0,0 z"
+            fill="url(#cupGrad)" stroke="#E5E7EB" stroke-width="2"/>
+      <!-- Handle -->
+      <path d="M60,38 h8 a8,8 0 1 1 -8,12" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+      <!-- Coffee surface -->
+      <rect x="18" y="36" width="40" height="6" rx="3" fill="#9CA3AF" opacity="0.35"/>
+    </g>
+
+    <!-- Saucer -->
+    <ellipse cx="38" cy="74" rx="32" ry="8" fill="url(#saucerGrad)" />
+    <ellipse cx="38" cy="74" rx="18" ry="3" fill="#CBD5E1" opacity="0.6"/>
+
+    <!-- Accent bead -->
+    <circle cx="12" cy="10" r="3" fill="#F59E0B" />
+  </g>
+</svg>

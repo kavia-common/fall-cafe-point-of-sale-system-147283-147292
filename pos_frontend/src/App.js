@@ -9,6 +9,8 @@ import MenuManager from './features/menu/MenuManager';
 import SalesDashboard from './features/sales/SalesDashboard';
 import Settings from './features/settings/Settings';
 import { CartProvider } from './state/cartContext';
+import Sidebar from './components/Sidebar';
+import logo from './assets/logo.svg';
 
 /**
  * Ocean Professional App Shell
@@ -34,26 +36,7 @@ function Sales() {
 }
 
 
-// Sidebar and StatusBar placeholders to be replaced by real components later
-function SidebarPlaceholder() {
-  const location = useLocation();
-  const isActive = (path) => location.pathname.startsWith(path);
-  return (
-    <aside className="sidebar">
-      <div className="brand">
-        <span role="img" aria-label="coffee">☕</span>
-        <span className="text">Fall Cafe POS</span>
-      </div>
-      <nav className="nav">
-        <Link className={isActive('/orders') ? 'active' : ''} to="/orders">Orders</Link>
-        <Link className={isActive('/menu') ? 'active' : ''} to="/menu">Menu</Link>
-        <Link className={isActive('/checkout') ? 'active' : ''} to="/checkout">Checkout</Link>
-        <Link className={isActive('/sales') ? 'active' : ''} to="/sales">Sales</Link>
-        <Link className={isActive('/settings') ? 'active' : ''} to="/settings">Settings</Link>
-      </nav>
-    </aside>
-  );
-}
+
 
 function OrdersPage() {
   // Two-column responsive layout: menu grid and current order placeholder
@@ -121,11 +104,24 @@ function App() {
     <CartProvider>
       <div className="app">
         {/* Sidebar region */}
-        <SidebarPlaceholder />
+        <Sidebar />
 
         {/* Header inside main content column */}
         <header className="header gradient">
-          <div className="h3">Fall Cafe POS</div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem' }}>
+            <img
+              src={logo}
+              alt="Fall Cafe POS"
+              width="28"
+              height="28"
+              style={{ display: 'block' }}
+              onError={(e) => {
+                // Graceful fallback: hide broken image and show text only
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            <div className="h3" style={{ margin: 0 }}>Fall Cafe POS</div>
+          </div>
           <div className="toolbar">
             <button
               className="button ghost"

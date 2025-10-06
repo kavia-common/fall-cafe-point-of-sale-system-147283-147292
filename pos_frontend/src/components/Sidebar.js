@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/logo.svg';
 
 /**
  * PUBLIC_INTERFACE
@@ -67,7 +68,25 @@ function Sidebar({ collapsed = false, onNavigate }) {
   return (
     <aside className="sidebar" role="navigation" aria-label={`${navAriaLabel} navigation`}>
       <div className="brand" aria-label="Application">
-        <span role="img" aria-label="coffee mug">☕</span>
+        <img
+          src={logo}
+          alt="Fall Cafe POS"
+          width="24"
+          height="24"
+          style={{ display: 'block' }}
+          onLoad={(e) => {
+            // If the logo loads fine, hide the emoji to avoid duplicate visuals
+            const sib = e.currentTarget.nextElementSibling;
+            if (sib && sib.getAttribute && sib.getAttribute('aria-label') === 'coffee mug') {
+              sib.style.display = 'none';
+            }
+          }}
+          onError={(e) => {
+            // Hide the broken image and allow the emoji + text to be visible
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+        <span role="img" aria-label="coffee mug" style={{ display: 'inline-block' }}>☕</span>
         {/* Brand text is auto-hidden on medium screens by App.css; also hide when collapsed */}
         {!collapsed && <span className="text">Fall Cafe POS</span>}
       </div>
