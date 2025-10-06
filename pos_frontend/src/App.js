@@ -7,6 +7,7 @@ import CurrentOrder from './features/orders/CurrentOrder';
 import CheckoutPanel from './features/checkout/CheckoutPanel';
 import MenuManager from './features/menu/MenuManager';
 import SalesDashboard from './features/sales/SalesDashboard';
+import Settings from './features/settings/Settings';
 import { CartProvider } from './state/cartContext';
 
 /**
@@ -31,14 +32,7 @@ function Checkout() {
 function Sales() {
   return <SalesDashboard />;
 }
-function Settings() {
-  return (
-    <div className="card">
-      <div className="h2">Settings</div>
-      <p className="muted">Configure preferences and devices.</p>
-    </div>
-  );
-}
+
 
 // Sidebar and StatusBar placeholders to be replaced by real components later
 function SidebarPlaceholder() {
@@ -97,10 +91,25 @@ function OrdersPage() {
 // PUBLIC_INTERFACE
 function App() {
   // basic theme toggle without external dependencies
-  const [theme, setTheme] = useState('light');
+  const THEME_STORAGE_KEY = 'fc_theme';
+  const getInitialTheme = () => {
+    try {
+      const stored = localStorage.getItem(THEME_STORAGE_KEY);
+      if (stored === 'light' || stored === 'dark') return stored;
+    } catch {
+      // ignore storage errors
+    }
+    return 'light';
+  };
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // ignore
+    }
   }, [theme]);
 
   // PUBLIC_INTERFACE
