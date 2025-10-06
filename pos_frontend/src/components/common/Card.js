@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId, useRef } from 'react';
 
 /**
  * PUBLIC_INTERFACE
@@ -15,16 +15,27 @@ import React from 'react';
  * - Provides semantic regions with roles/aria when title is present.
  */
 function Card({ title, children, footer, className = '', ...rest }) {
-  const titleId = React.useId ? React.useId() : undefined; // React 18 has useId
+  // Call hooks unconditionally to satisfy rules-of-hooks
+  const rid = useId();
+  const fallbackIdRef = useRef(null);
+
+  // Derive a stable id: prefer useId output; ensure a fallback exists for environments without deterministic ids
+  if (fallbackIdRef.current === null) {
+    fallbackIdRef.current = `card-title-${Math.random().toString(36).slice(2, 9)}`;
+  }
+  const generatedId = rid || fallbackIdRef.current;
+
+  const labelledBy = title ? generatedId : undefined;
+
   return (
     <section
       className={['card', className].filter(Boolean).join(' ')}
-      aria-labelledby={title ? titleId : undefined}
+      aria-labelledby={labelledBy}
       {...rest}
     >
       {title ? (
         <header
-          id={titleId}
+          id={generatedId}
           className="card-header"
           style={{
             marginBottom: 'var(--space-3)',

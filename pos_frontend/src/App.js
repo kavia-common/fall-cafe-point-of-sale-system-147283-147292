@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import StatusBar from './components/StatusBar';
+import MenuGrid from './features/orders/MenuGrid';
+import { CartProvider } from './state/cartContext';
 
 /**
  * Ocean Professional App Shell
@@ -14,15 +16,7 @@ import StatusBar from './components/StatusBar';
  * Avoids any Supabase usage to keep preview working without env vars.
  */
 
-// Simple placeholder components for routes
-function Orders() {
-  return (
-    <div className="card">
-      <div className="h2">Orders</div>
-      <p className="muted">Create and manage current orders.</p>
-    </div>
-  );
-}
+// Simple placeholder components for routes (kept for other routes)
 function Menu() {
   return (
     <div className="card">
@@ -77,8 +71,40 @@ function SidebarPlaceholder() {
   );
 }
 
-function StatusBarPlaceholder() {
-  return null;
+function OrdersPage() {
+  // Two-column responsive layout: menu grid and current order placeholder
+  const containerStyle = {
+    display: 'grid',
+    gap: 'var(--space-4)',
+    gridTemplateColumns: '2fr 1fr',
+  };
+  const responsive = `
+    @media (max-width: 1100px) {
+      .orders-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+
+  return (
+    <div>
+      <style>{responsive}</style>
+      <div className="orders-layout" style={containerStyle}>
+        <section>
+          <div className="h3" style={{ marginBottom: 'var(--space-3)' }}>Menu</div>
+          <MenuGrid />
+        </section>
+
+        <aside>
+          <div className="h3" style={{ marginBottom: 'var(--space-3)' }}>Current Order</div>
+          <div className="card">
+            <p className="muted">CurrentOrder UI coming soon.</p>
+            <p className="muted">Use the Add buttons to add items to the cart.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
 }
 
 // PUBLIC_INTERFACE
@@ -96,41 +122,43 @@ function App() {
   };
 
   return (
-    <div className="app">
-      {/* Sidebar region */}
-      <SidebarPlaceholder />
+    <CartProvider>
+      <div className="app">
+        {/* Sidebar region */}
+        <SidebarPlaceholder />
 
-      {/* Header inside main content column */}
-      <header className="header gradient">
-        <div className="h3">Fall Cafe POS</div>
-        <div className="toolbar">
-          <button
-            className="button ghost"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-          >
-            {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-          </button>
-        </div>
-      </header>
+        {/* Header inside main content column */}
+        <header className="header gradient">
+          <div className="h3">Fall Cafe POS</div>
+          <div className="toolbar">
+            <button
+              className="button ghost"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+            </button>
+          </div>
+        </header>
 
-      {/* Main outlet area */}
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<Navigate to="/orders" replace />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/settings" element={<Settings />} />
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/orders" replace />} />
-        </Routes>
-      </main>
+        {/* Main outlet area */}
+        <main className="main">
+          <Routes>
+            <Route path="/" element={<Navigate to="/orders" replace />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/sales" element={<Sales />} />
+            <Route path="/settings" element={<Settings />} />
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/orders" replace />} />
+          </Routes>
+        </main>
 
-      {/* Bottom status bar */}
-      <StatusBar statusMessage="Ready" statusType="info" />
-    </div>
+        {/* Bottom status bar */}
+        <StatusBar statusMessage="Ready" statusType="info" />
+      </div>
+    </CartProvider>
   );
 }
 
