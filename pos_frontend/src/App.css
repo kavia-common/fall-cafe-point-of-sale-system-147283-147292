@@ -1,104 +1,269 @@
-/* CSS Variables for Theme Management */
+/* Ocean Professional - App Layout and Components
+   Uses variables defined in index.css :root for consistent theming.
+*/
+
+/* Theme toggle between light/dark using data-theme on <html> */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --app-sidebar-width: 280px;
+  --app-header-height: 64px;
+  --app-status-height: 40px;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+/* Light/Dark background swap using our global variables where possible */
+[data-theme="light"] .app {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+[data-theme="dark"] .app {
+  background: #0b1220;
+  color: #e5e7eb;
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Application shell */
+.app {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  display: grid;
+  grid-template-columns: var(--app-sidebar-width) 1fr;
+  grid-template-rows: var(--app-header-height) 1fr var(--app-status-height);
+  grid-template-areas:
+    "sidebar header"
+    "sidebar main"
+    "sidebar statusbar";
+  transition: background var(--transition), color var(--transition);
 }
 
+/* Sidebar */
+.sidebar {
+  grid-area: sidebar;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  gap: var(--space-3);
+}
+
+.sidebar .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.nav a {
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  border: 1px solid transparent;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.nav a:hover {
+  background: rgba(37,99,235,0.07);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+.nav a.active {
+  background: rgba(37,99,235,0.1);
+  color: var(--color-primary);
+  border-color: rgba(37,99,235,0.2);
+}
+
+/* Header */
+.header {
+  grid-area: header;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.header.gradient {
+  /* Subtle gradient per style guide */
+  background-image: linear-gradient(135deg, rgba(37,99,235,0.06) 0%, rgba(255,255,255,1) 100%);
+}
+
+/* Content/Main */
+.content, .main {
+  grid-area: main;
+  padding: var(--space-4);
+  display: block;
+}
+.main .toolbar {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+/* Status bar */
+.statusbar {
+  grid-area: statusbar;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  font-size: 0.925rem;
+  color: var(--color-muted);
+}
+
+/* Responsive behavior */
+@media (max-width: 1024px) {
+  .app {
+    grid-template-columns: 80px 1fr;
+  }
+  .sidebar .brand .text {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--app-header-height) auto 1fr var(--app-status-height);
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "statusbar";
+  }
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: none;
+    padding: var(--space-3);
+  }
+}
+
+/* Buttons using variables */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.95rem;
+  background: var(--color-primary);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition), background var(--transition);
+}
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  background: #1d4ed8;
+}
+.button:active { transform: translateY(0); }
+.button:focus-visible { box-shadow: var(--focus-ring); }
+.button.secondary {
+  background: var(--color-secondary);
+  color: #111827;
+}
+.button.ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+
+/* Cards */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+  transition: box-shadow var(--transition), transform var(--transition-fast);
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Inputs */
+.input,
+.select,
+.textarea {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* Subtle transitions on common elements */
+.App, .app, .sidebar, .header, .main, .statusbar, .card, .button, .input {
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+/* Keep CRA demo visuals working for now (logo spin/link color) */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
-}
-
 .App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+  color: var(--color-primary);
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
+/* Demo theme toggle button style aligning with new variables */
 .theme-toggle {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  background: var(--color-primary);
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-fast), box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
 }
-
 .theme-toggle:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  box-shadow: var(--shadow-md);
 }
-
 .theme-toggle:active {
   transform: translateY(0);
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
 @media (max-width: 768px) {
   .theme-toggle {
     top: 10px;
     right: 10px;
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 12px;
   }
 }
