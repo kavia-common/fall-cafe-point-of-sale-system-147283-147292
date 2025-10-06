@@ -4,6 +4,7 @@ import './App.css';
 import StatusBar from './components/StatusBar';
 import MenuGrid from './features/orders/MenuGrid';
 import CurrentOrder from './features/orders/CurrentOrder';
+import CheckoutPanel from './features/checkout/CheckoutPanel';
 import { CartProvider } from './state/cartContext';
 
 /**
@@ -28,9 +29,8 @@ function Menu() {
 }
 function Checkout() {
   return (
-    <div className="card">
-      <div className="h2">Checkout</div>
-      <p className="muted">Process payments and receipts.</p>
+    <div>
+      <CheckoutPanel />
     </div>
   );
 }
