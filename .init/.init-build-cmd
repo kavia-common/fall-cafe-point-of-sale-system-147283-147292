@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/fall-cafe-point-of-sale-system-147283-147292/pos_frontend"
+}
